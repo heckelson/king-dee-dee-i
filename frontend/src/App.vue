@@ -1,28 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/dedede.png" />
-  <p>Cowabunga dude.</p>
-
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <MedicationPicker />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <RiskScore />
+      </div>
+      <div class="col-sm-8">
+        <KnownInteractions />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import MedicationPicker from "./components/MedicationPicker.vue";
+import RiskScore from "./components/RiskScore.vue";
+import KnownInteractions from "./components/KnownInteractions.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    MedicationPicker,
+    RiskScore,
+    KnownInteractions,
   },
 };
 </script>
 
 <style>
+@import "bootstrap";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+div {
+  border: 1px solid red;
 }
 </style>

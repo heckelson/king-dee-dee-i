@@ -5,6 +5,7 @@
         <MedicationPicker />
       </div>
     </div>
+
     <div class="row">
       <div class="col-sm-4">
         <RiskScore />
@@ -33,6 +34,10 @@ export default {
 
 <style>
 @import "bootstrap";
+
+* {
+  box-sizing: border-box;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

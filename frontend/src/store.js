@@ -2,14 +2,25 @@ import { defineStore } from "pinia";
 
 export const useMedStore = defineStore("medStore", {
   state: () => ({
-    count: 0,
+    selectedMeds: [],
   }),
   getters: {
-    count: (state) => state.count,
+    meds: (state) => state.selectedMeds,
   },
   actions: {
-    increment() {
-      this.$state.count += 1;
+    addMedication(medication) {
+      if (this.$state.selectedMeds.indexOf(medication) === -1) {
+        this.$state.selectedMeds.push(medication);
+        this.$state.selectedMeds.sort();
+      }
+    },
+    removeMedication(medication) {
+      this.$state.selectedMeds = this.$state.selectedMeds.filter(
+        (elem) => elem !== medication,
+      );
+    },
+    clearAllSelectedMeds() {
+      this.$state.selectedMeds = [];
     },
   },
 });

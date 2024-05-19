@@ -1,5 +1,10 @@
+# backend stuff
 .venv
 __pycache__
 
+# frontend stuff
 node_modules
 dist
+
+# sqlite database
+test.db

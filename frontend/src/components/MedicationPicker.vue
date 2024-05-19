@@ -68,7 +68,7 @@
 
 <script>
 import { useMedStore } from "@/store";
-import { mapStores } from "pinia";
+import { mapStores, storeToRefs } from "pinia";
 
 import { SERVER_URL } from "@/constants";
 
@@ -77,11 +77,12 @@ export default {
     return {
       searchString: "",
       searchResults: [],
+      medStore: undefined,
     };
   },
 
   mounted() {
-    console.log("Mounted!");
+    this.medStore = storeToRefs(this.medStoreStore);
   },
 
   methods: {
@@ -91,6 +92,11 @@ export default {
           .then((resp) => {
             resp.json().then((body) => {
               this.searchResults = body["searchResults"];
+
+              // filter out all elements that are already in our selection.
+              this.searchResults = this.searchResults.filter(
+                (elem) => this.medStoreStore.selectedMeds.indexOf(elem) === -1,
+              );
             });
           })
           .catch((err) => {

@@ -1,3 +1,6 @@
+import random
+from random import random
+
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -30,4 +33,37 @@ def mock_response(search_term):
                 "Methoxy polyethylene glycol-epoetin beta",
             ]
         ),
+    }
+
+
+@app.route("/mock-interactions")
+def mock_interactions():
+    # http://localhost:8000/mock-interactions?selectedMeds=peg%2010%2Cpeg%2020
+
+    selected_meds = request.args.get("selectedMeds")
+
+    if selected_meds is None:
+        return {}, 400
+    if len(selected_meds) < 2:
+        return {"selectedMeds": selected_meds}, 400
+
+    selected_meds = selected_meds.split(",")
+    certainty = round(random(), 3)
+
+    return {
+        "selectedMeds": selected_meds,
+        "interactions": [
+            {
+                "drug1": "POLYETHYLENE GLYCOL 3350",
+                "drug2": "polyethylene glycol 9000",
+                "sideEffect": "death",
+                "certainty": certainty,
+            },
+            {
+                "drug1": "POLYETHYLENE GLYCOL 3350",
+                "drug2": "Polyethylene Glycol 400",
+                "sideEffect": "diarrhea",
+                "certainty": certainty,
+            },
+        ],
     }

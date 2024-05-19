@@ -5,7 +5,7 @@ export const useMedStore = defineStore("medStore", {
     selectedMeds: [],
   }),
   getters: {
-    meds: (state) => state.selectedMeds,
+    // meds: (state) => state.selectedMeds,
   },
   actions: {
     addMedication(medication) {

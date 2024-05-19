@@ -2,16 +2,20 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <MedicationPicker />
+        <div class="container text-center">
+          <img src="./assets/dedede.png" alt="" />
+        </div>
+
+        <MedicationPicker class="card" />
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-4">
-        <RiskScore />
+        <RiskScore class="card" />
       </div>
       <div class="col-sm-8">
-        <KnownInteractions />
+        <KnownInteractions class="card" />
       </div>
     </div>
   </div>
@@ -45,7 +49,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 
-div {
-  border: 1px solid red;
+.card {
+  margin-top: 12px;
 }
 </style>

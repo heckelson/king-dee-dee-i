@@ -1,6 +1,6 @@
 # King Dee-Dee-I
 
-![](http://www.pngmart.com/files/13/King-Dedede-PNG-Transparent-Image.png)
+![](./frontend/src/assets/dedede-big.png)
 
 ## Setup
 

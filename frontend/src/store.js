@@ -15,9 +15,12 @@ export const useMedStore = defineStore("medStore", {
       }
     },
     removeMedication(medication) {
-      this.$state.selectedMeds = this.$state.selectedMeds.filter(
+      const other_meds = this.$state.selectedMeds.filter(
         (elem) => elem !== medication,
       );
+
+      this.$state.selectedMeds = other_meds;
+      this.$state.selectedMeds.sort();
     },
     clearAllSelectedMeds() {
       this.$state.selectedMeds = [];

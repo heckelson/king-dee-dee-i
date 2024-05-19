@@ -39,11 +39,25 @@
           <div class="col-sm-7">
             <h3>Selected Medications</h3>
 
+            <button
+              class="btn btn-danger"
+              @click="this.clearMedicationSelection()"
+            >
+              Clear All
+            </button>
+
             <div
+              class=""
               v-for="medication in this.medStoreStore.selectedMeds"
               v-bind:key="medication"
             >
               {{ medication }}
+              <button
+                class="btn btn-sm btn-danger"
+                @click="this.removeMedicationFromSelection(medication)"
+              >
+                Remove
+              </button>
             </div>
           </div>
         </div>
@@ -73,21 +87,33 @@ export default {
   methods: {
     searchForMedication() {
       if (this.searchString.length > 2) {
-        fetch(`${SERVER_URL}/mock-search/${this.searchString}`).then((resp) => {
-          resp.json().then((body) => {
-            this.searchResults = body["searchResults"];
+        fetch(`${SERVER_URL}/mock-search/${this.searchString}`)
+          .then((resp) => {
+            resp.json().then((body) => {
+              this.searchResults = body["searchResults"];
+            });
+          })
+          .catch((err) => {
+            // TODO: Handle this better.
+            console.error(err);
           });
-        });
       }
-    },
-    getSearchResults() {
-      return this.$data.searchResults;
     },
 
     addMedicationToSelection(medication) {
       this.medStoreStore.addMedication(medication);
+
+      // reset the form.
       this.$data.searchResults = [];
       this.searchString = "";
+    },
+
+    removeMedicationFromSelection(medication) {
+      this.medStoreStore.removeMedication(medication);
+    },
+
+    clearMedicationSelection() {
+      this.medStoreStore.clearAllSelectedMeds();
     },
   },
   computed: {

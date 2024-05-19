@@ -6,7 +6,20 @@
 
 ### Set up DB
 
-**TODO**
+You will need the following commands:
+
+- `python`
+- `sqlite3`
+- `wget`
+- `printf`
+- `gzip`
+
+... if you have a bash terminal open, it should hopefully work.
+
+Then just run `python setup-database.py` and grab a coffee, it'll download the script,
+install it into the sqlite database, and remove all the temporary downloaded files.
+
+Your database will be available at `test.db`.
 
 ### Install Backend Dependencies
 
@@ -27,3 +40,8 @@
 From the root of the repo, run `flask run --host=0.0.0.0 --port=8000 --debug`.
 
 This starts up flask, which is configured to serve the vue files.
+
+### Working on the frontend
+
+- Run the flask server (see "Run Application")
+- cd to `frontend/` and run `npm run serve`.

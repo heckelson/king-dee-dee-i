@@ -56,6 +56,8 @@
 import { useMedStore } from "@/store";
 import { mapStores } from "pinia";
 
+import { SERVER_URL } from "@/constants";
+
 export default {
   data() {
     return {
@@ -66,13 +68,16 @@ export default {
 
   mounted() {
     console.log("Mounted!");
-    this.medStoreStore.addMedication("asdfff");
   },
 
   methods: {
     searchForMedication() {
       if (this.searchString.length > 2) {
-        this.searchResults = [this.searchString];
+        fetch(`${SERVER_URL}/mock-search/${this.searchString}`).then((resp) => {
+          resp.json().then((body) => {
+            this.searchResults = body["searchResults"];
+          });
+        });
       }
     },
     getSearchResults() {

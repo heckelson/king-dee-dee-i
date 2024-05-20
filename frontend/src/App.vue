@@ -37,8 +37,6 @@ export default {
 </script>
 
 <style>
-@import "bootstrap";
-
 * {
   box-sizing: border-box;
 }

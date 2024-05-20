@@ -21,19 +21,21 @@
               <h4>Results</h4>
 
               <div id="search-results">
-                <div
-                  class="text-start"
-                  v-for="result in searchResults"
-                  v-bind:key="result"
-                >
-                  {{ result }}
-                  <button
-                    class="btn btn-sm btn-primary"
-                    @click="this.addMedicationToSelection(result)"
-                  >
-                    Add
-                  </button>
-                </div>
+                <table class="table table-hover">
+                  <tbody>
+                    <tr v-for="result of searchResults" v-bind:key="result">
+                      <td class="text-start">{{ result }}</td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-primary"
+                          @click="this.addMedicationToSelection(result)"
+                        >
+                          Add
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -41,25 +43,33 @@
           <div class="col-sm-7">
             <h3>Selected Medications</h3>
 
-            <button
-              class="btn btn-danger"
-              @click="this.clearMedicationSelection()"
-            >
-              Clear All
-            </button>
-
-            <div
-              class=""
-              v-for="medication in this.medStoreStore.selectedMeds"
-              v-bind:key="medication"
-            >
-              {{ medication }}
+            <div>
               <button
-                class="btn btn-sm btn-danger"
-                @click="this.removeMedicationFromSelection(medication)"
+                class="btn btn-danger"
+                @click="this.clearMedicationSelection()"
               >
-                Remove
+                Clear All
               </button>
+            </div>
+            <div>
+              <table class="table table-hover">
+                <tbody>
+                  <tr
+                    v-for="medication of this.medStoreStore.selectedMeds"
+                    v-bind:key="medication"
+                  >
+                    <td class="text-start">{{ medication }}</td>
+                    <td>
+                      <button
+                        class="btn btn-sm btn-danger"
+                        @click="this.removeMedicationFromSelection(medication)"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

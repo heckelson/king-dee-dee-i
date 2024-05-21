@@ -34,9 +34,10 @@ def mock_response(search_term):
     search_results = [dict(row) for row in results]  # Convert rows to dictionaries
     print(search_results)
     con.close()
+    drug_names = [drug["drug_1_concept_name"] for drug in search_results]
     return {
         "searchTerm": search_term,
-        "searchResults": search_results[0],
+        "searchResults": drug_names,
     }
     # return {
     #    "searchTerm": search_term,
@@ -58,29 +59,56 @@ def mock_interactions():
 
     selected_meds = request.args.get("selectedMeds")
     print("Selected meds: ", selected_meds)
+    # print([x.get('drug_1_concept_name') for x in selected_meds])
 
     if selected_meds is None:
         return {}, 400
     if len(selected_meds) < 2:
         return {"selectedMeds": selected_meds}, 400
 
-    # selected_meds = selected_meds.split(",")
+    selected_meds = selected_meds.split(",")
     certainty = round(random(), 3)
 
+    # con = sqlite3.connect("test.db")
+    # con.row_factory = sqlite3.Row  # This allows us to return rows as dictionaries
+
+    # query = "SELECT distinct condition_concept_name FROM drugs where drug_1_concept_name like ? and drug_2_concept_name like ?;"
+    # drug1, drug2 = selected_meds.split(",")
+    # cur = con.execute(query, (drug1, drug2))
+    # results = cur.fetchall()
+    # search_results = [dict(row) for row in results]  # Convert rows to dictionaries
+    # print(search_results)
+
+    # --------------dynamic query----------
     con = sqlite3.connect("test.db")
-    con.row_factory = sqlite3.Row  # This allows us to return rows as dictionaries
+    con.row_factory = sqlite3.Row
+    cursor = con.cursor()
+    base_query = """
+    SELECT distinct condition_concept_name
+    FROM drugs
+    WHERE drug_1_concept_name IN ({}) AND drug_2_concept_name IN ({})
+    """
 
-    query = "SELECT distinct condition_concept_name FROM drugs where drug_1_concept_name like ? and drug_2_concept_name like ?;"
-    drug1, drug2 = selected_meds.split(",")
-    cur = con.execute(query, (drug1, drug2))
-    results = cur.fetchall()
-    search_results = [dict(row) for row in results]  # Convert rows to dictionaries
-    print(search_results)
+    placeholders = ",".join("?" for _ in selected_meds)
+
+    query = base_query.format(placeholders, placeholders)
+
+    print(query)
+
+    params = selected_meds + selected_meds
+
+    print(params)
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+
+    search_results = [dict(row) for row in results]
+
+    # --------------dynamic query end---------
+
     con.close()
-
     return {
         "selectedMeds": selected_meds,
-        "searchResults": search_results[0],
+        "searchResults": search_results,
     }
 
     # return {

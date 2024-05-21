@@ -20,6 +20,12 @@
             <div class="container card">
               <h4>Results</h4>
 
+              <div class="container text-center" v-show="loadingSpinnerShown">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+
               <div id="search-results">
                 <table class="table table-hover">
                   <tbody>
@@ -90,6 +96,7 @@ export default {
       searchString: "",
       searchResults: [],
       medStore: undefined,
+      loadingSpinnerShown: false,
     };
   },
 
@@ -100,6 +107,9 @@ export default {
   methods: {
     searchForMedication() {
       if (this.searchString.length > 2) {
+        this.searchResults = [];
+        this.loadingSpinnerShown = true;
+
         fetch(`${SERVER_URL}/mock-search/${this.searchString}`)
           .then((resp) => {
             resp.json().then((body) => {
@@ -114,6 +124,9 @@ export default {
           .catch((err) => {
             // TODO: Handle this better.
             console.error(err);
+          })
+          .finally(() => {
+            this.loadingSpinnerShown = false;
           });
       }
     },

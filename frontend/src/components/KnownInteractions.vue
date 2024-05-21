@@ -4,6 +4,12 @@
     <div class="container">
       <p>Table</p>
 
+      <div class="container text-center" v-show="loadingSpinnerShown">
+        <div class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
       <pre class="text-start">{{ this.interactions }}</pre>
     </div>
   </div>
@@ -20,6 +26,7 @@ export default {
     return {
       interactions: [],
       medStore: undefined, // defined in `mounted()`
+      loadingSpinnerShown: false,
     };
   },
 
@@ -30,6 +37,8 @@ export default {
   methods: {
     fetchInteractions() {
       const encodedSelection = encodeURI(this.medStore.selectedMeds);
+
+      this.loadingSpinnerShown = true;
 
       if (this.medStore.selectedMeds.length >= 2) {
         fetch(
@@ -42,6 +51,9 @@ export default {
           })
           .catch((err) => {
             console.error(err);
+          })
+          .finally(() => {
+            this.loadingSpinnerShown = false;
           });
       }
     },

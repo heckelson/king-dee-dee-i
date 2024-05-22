@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schema.up.railway.app/railway.schema.json",
+    "build": {
+        "builder": "NIXPACKS",
+        "nixpacksPlan": {
+            "phases": {
+                "setup": {
+                    "nixPkgs": [
+                        "python2",
+                        "sqlite",
+                        "printf"
+                    ],
+                    "aptPkgs": [
+                        "build-essential",
+                        "glibc-source",
+                        "gzip"
+                    ]
+                }
+            }
+        }
+    },
+    "deploy": {
+        "startCommand": "cd ./frontend && npm run serve"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "workbench.colorCustomizations": {
+        "[Default Dark Modern]": {
+            "terminal.background": "#45405b3f",
+            "editor.background": "#45405b3f",
+            "sideBar.background": "#45405b3f"
+        },
+        "activityBar.background": "#F0A32F",
+        "titleBar.activeBackground": "#F2AF4A",
+        "titleBar.activeForeground": "#241703"
+    }
+}

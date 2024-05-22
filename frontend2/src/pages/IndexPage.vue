@@ -3,10 +3,6 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="container text-center">
-            <img src="src/assets/dedede.png" alt="" />
-          </div>
-
           <MedicationPicker class="card" />
         </div>
       </div>

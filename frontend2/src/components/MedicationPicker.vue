@@ -22,9 +22,10 @@
             </form>
 
             <div class="container card">
-              <div class="container text-center" v-show="loadingSpinnerShown">
-                <div class="spinner-grow text-primary" role="status"></div>
-              </div>
+              <div
+                class="container text-center"
+                v-show="loadingSpinnerShown"
+              ></div>
 
               <div id="search-results">
                 <div v-if="loadingSpinnerShown">
@@ -54,6 +55,17 @@
                       </q-item-section>
                     </q-item>
                   </div>
+                  <q-item
+                    v-if="
+                      searchResults.length === 0 &&
+                      !loadingSpinnerShown &&
+                      !isInitialSearch
+                    "
+                  >
+                    <q-item-section>
+                      <q-item-label>No medications found</q-item-label>
+                    </q-item-section>
+                  </q-item>
                 </q-list>
               </div>
             </div>
@@ -106,6 +118,7 @@ import { SERVER_URL } from "src/constants";
 export default {
   data() {
     return {
+      isInitialSearch: true,
       searchString: "",
       searchResults: [],
       medStore: undefined,
@@ -119,6 +132,7 @@ export default {
 
   methods: {
     searchForMedication() {
+      this.isInitialSearch = false;
       if (this.searchString.length > 2) {
         this.searchResults = [];
         this.loadingSpinnerShown = true;

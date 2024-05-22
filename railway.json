@@ -16,7 +16,8 @@
                     ]
                 }
             }
-        }
+        },
+        "buildCommand": "cd ./frontend && npm install && npm run build"
     },
     "deploy": {
         "startCommand": "cd ./frontend && npm run serve"

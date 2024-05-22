@@ -4,36 +4,43 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-7">
-            <h3>Selected Medications</h3>
+            <div class="text-h4">Your Medications</div>
 
-            <div>
-              <button
-                class="btn btn-danger"
-                @click="this.clearMedicationSelection()"
+            <q-list>
+              <div
+                v-for="medication of this.medStoreStore.selectedMeds"
+                v-bind:key="medication"
               >
-                Clear All
-              </button>
-            </div>
-            <div>
-              <table class="table table-hover">
-                <tbody>
-                  <tr
-                    v-for="medication of this.medStoreStore.selectedMeds"
-                    v-bind:key="medication"
-                  >
-                    <td class="text-start">{{ medication }}</td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-danger"
-                        @click="this.removeMedicationFromSelection(medication)"
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                <q-item>
+                  <q-item-section>
+                    <q-item-label>{{ medication }}</q-item-label>
+                  </q-item-section>
+                  <q-item-section side top>
+                    <q-btn
+                      outline
+                      rounded
+                      color="primary"
+                      label="Remove"
+                      @click="this.removeMedicationFromSelection(result)"
+                    />
+                  </q-item-section>
+                </q-item>
+              </div>
+              <q-item-label v-if="this.medStoreStore.selectedMeds.length === 0">
+                <q-item-section>
+                  <q-item-label>No medications found</q-item-label>
+                </q-item-section>
+              </q-item-label>
+            </q-list>
+
+            <q-btn
+              @click="this.clearMedicationSelection()"
+              outline
+              rounded
+              color="warning"
+            >
+              Clear All
+            </q-btn>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-5">
-            <h3>Add Medication</h3>
+            <div class="text-h4">Add Medication</div>
 
             <form @submit.prevent="searchForMedication()" class="input-group">
               <q-input

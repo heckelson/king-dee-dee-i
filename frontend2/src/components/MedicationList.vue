@@ -34,6 +34,7 @@
     </div>
 
     <q-btn
+      v-if="this.medStoreStore.selectedMeds.length > 0"
       @click="this.clearMedicationSelection()"
       outline
       rounded

@@ -1,7 +1,5 @@
 <template>
   <div class="column items-center">
-    <div class="text-h4">Add Medication</div>
-
     <form @submit.prevent="searchForMedication()" class="input-group">
       <q-input
         v-model="searchString"

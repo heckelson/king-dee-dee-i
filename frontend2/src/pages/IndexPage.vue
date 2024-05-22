@@ -1,10 +1,10 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="container">
-      <MedicationPicker class="card" />
+  <q-page class="page flex flex-center">
+    <div class="column q-gutter-md">
+      <MedicationPicker />
       <MedicationList></MedicationList>
-      <RiskScore class="card" />
-      <KnownInteractions class="card" />
+      <RiskScore />
+      <KnownInteractions />
     </div>
   </q-page>
 </template>
@@ -30,18 +30,8 @@ export default defineComponent({
 });
 </script>
 
-<style>
-* {
-  box-sizing: border-box;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.card {
-  margin-top: 12px;
+<style scoped>
+.page {
+  padding: 22px;
 }
 </style>

@@ -2,11 +2,9 @@
   <q-page class="flex flex-center">
     <div class="container">
       <MedicationPicker class="card" />
-
       <MedicationList></MedicationList>
-
-      <KnownInteractions class="card" />
       <RiskScore class="card" />
+      <KnownInteractions class="card" />
     </div>
   </q-page>
 </template>

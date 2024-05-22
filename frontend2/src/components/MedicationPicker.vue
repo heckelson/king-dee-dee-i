@@ -85,10 +85,10 @@
 </template>
 
 <script>
-import { useMedStore } from "@/store";
+import { useMedStore } from "stores/store";
 import { mapStores, storeToRefs } from "pinia";
 
-import { SERVER_URL } from "@/constants";
+import { SERVER_URL } from "src/constants";
 
 export default {
   data() {
@@ -117,7 +117,7 @@ export default {
 
               // filter out all elements that are already in our selection.
               this.searchResults = this.searchResults.filter(
-                (elem) => this.medStoreStore.selectedMeds.indexOf(elem) === -1,
+                (elem) => this.medStoreStore.selectedMeds.indexOf(elem) === -1
               );
             });
           })

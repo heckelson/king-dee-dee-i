@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import { useMedStore } from "@/store";
+import { useMedStore } from "stores/store";
 import { mapStores, storeToRefs } from "pinia";
 
-import { SERVER_URL } from "@/constants";
+import { SERVER_URL } from "src/constants";
 
 export default {
   data() {
@@ -42,7 +42,7 @@ export default {
 
       if (this.medStore.selectedMeds.length >= 2) {
         fetch(
-          `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`,
+          `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
         )
           .then((resp) => {
             resp.json().then((body) => {

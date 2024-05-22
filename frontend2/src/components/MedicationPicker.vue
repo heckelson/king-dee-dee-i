@@ -22,30 +22,39 @@
             </form>
 
             <div class="container card">
-              <h4>Results</h4>
-
               <div class="container text-center" v-show="loadingSpinnerShown">
-                <div class="spinner-grow text-primary" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
+                <div class="spinner-grow text-primary" role="status"></div>
               </div>
 
               <div id="search-results">
-                <table class="table table-hover">
-                  <tbody>
-                    <tr v-for="result of searchResults" v-bind:key="result">
-                      <td class="text-start">{{ result }}</td>
-                      <td>
-                        <button
-                          class="btn btn-sm btn-primary"
+                <div v-if="loadingSpinnerShown">
+                  <div class="q-pa-md">
+                    <div class="q-gutter-y-md">
+                      <q-skeleton animation="wave" type="rect" />
+                      <q-skeleton animation="wave" type="rect" />
+                      <q-skeleton animation="wave" type="rect" />
+                    </div>
+                  </div>
+                </div>
+
+                <q-list>
+                  <div v-for="result of searchResults" v-bind:key="result">
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>{{ result }}</q-item-label>
+                      </q-item-section>
+                      <q-item-section side top>
+                        <q-btn
+                          outline
+                          rounded
+                          color="primary"
+                          label="Add"
                           @click="this.addMedicationToSelection(result)"
-                        >
-                          Add
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        />
+                      </q-item-section>
+                    </q-item>
+                  </div>
+                </q-list>
               </div>
             </div>
           </div>

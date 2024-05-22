@@ -4,6 +4,9 @@
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/PM5XoJ?referralCode=9XJNhY)
 
+Dev branch deployment: 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/OS1XTt?referralCode=9XJNhY)
+
 ## Setup
 
 ### Set up DB

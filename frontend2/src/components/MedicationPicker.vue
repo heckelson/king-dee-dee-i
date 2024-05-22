@@ -1,20 +1,24 @@
 <template>
   <div class="container text-center">
     <div class="col">
-      <h1 class="h1">Medication Picker</h1>
-
       <div class="container">
         <div class="row">
           <div class="col-sm-5">
             <h3>Add Medication</h3>
 
             <form @submit.prevent="searchForMedication()" class="input-group">
-              <input
-                class="input-group-text"
+              <q-input
                 v-model="searchString"
+                :loading="loadingSpinnerShown"
+                @keydown.enter.prevent="searchForMedication()"
+                rounded
+                outlined
                 placeholder="Search medication"
-              />
-              <button class="btn btn-primary">Search</button>
+              >
+                <template v-slot:append>
+                  <q-icon name="search" @click="searchForMedication()" />
+                </template>
+              </q-input>
             </form>
 
             <div class="container card">

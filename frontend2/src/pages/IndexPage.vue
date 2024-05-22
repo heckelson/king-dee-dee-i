@@ -9,20 +9,21 @@
 
       <MedicationList></MedicationList>
 
-      <div class="row">
-        <div class="col-sm-4">
-          <RiskScore class="card" />
-        </div>
-        <div class="col-sm-8">
-          <KnownInteractions class="card" />
-        </div>
-      </div>
+      <KnownInteractions class="card" />
     </div>
+
+    <q-dialog v-model="isPopupShown" seamless position="bottom">
+      <q-card>
+        <q-card-section class="row items-center no-wrap">
+          <RiskScore class="card" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import MedicationPicker from "src/components/MedicationPicker.vue";
 import RiskScore from "src/components/RiskScore.vue";
 import KnownInteractions from "src/components/KnownInteractions.vue";
@@ -35,6 +36,13 @@ export default defineComponent({
     MedicationList,
     RiskScore,
     KnownInteractions,
+  },
+  setup() {
+    const isPopupShown = ref(true);
+
+    return {
+      isPopupShown,
+    };
   },
 });
 </script>

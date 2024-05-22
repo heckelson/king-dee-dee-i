@@ -1,6 +1,8 @@
 <template>
   <div class="column items-center">
-    <div class="text-h4">Your Medications</div>
+    <div class="column q-gutter-md">
+      <div class="text-h4">Your Medications</div>
+    </div>
 
     <div class="list">
       <q-list>
@@ -36,8 +38,10 @@
       outline
       rounded
       color="warning"
+      size="sm"
+      class="self-center"
     >
-      Clear All
+      Remove All
     </q-btn>
   </div>
 </template>
@@ -75,6 +79,6 @@ export default {
 
 <style scoped>
 .list {
-  width: 500px;
+  min-width: 500px;
 }
 </style>

@@ -70,39 +70,6 @@
               </div>
             </div>
           </div>
-
-          <div class="col-sm-7">
-            <h3>Selected Medications</h3>
-
-            <div>
-              <button
-                class="btn btn-danger"
-                @click="this.clearMedicationSelection()"
-              >
-                Clear All
-              </button>
-            </div>
-            <div>
-              <table class="table table-hover">
-                <tbody>
-                  <tr
-                    v-for="medication of this.medStoreStore.selectedMeds"
-                    v-bind:key="medication"
-                  >
-                    <td class="text-start">{{ medication }}</td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-danger"
-                        @click="this.removeMedicationFromSelection(medication)"
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -164,14 +131,6 @@ export default {
       // reset the form.
       this.$data.searchResults = [];
       this.searchString = "";
-    },
-
-    removeMedicationFromSelection(medication) {
-      this.medStoreStore.removeMedication(medication);
-    },
-
-    clearMedicationSelection() {
-      this.medStoreStore.clearAllSelectedMeds();
     },
   },
   computed: {

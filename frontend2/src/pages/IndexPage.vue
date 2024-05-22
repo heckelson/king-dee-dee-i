@@ -7,6 +7,8 @@
         </div>
       </div>
 
+      <MedicationList></MedicationList>
+
       <div class="row">
         <div class="col-sm-4">
           <RiskScore class="card" />
@@ -24,11 +26,13 @@ import { defineComponent } from "vue";
 import MedicationPicker from "src/components/MedicationPicker.vue";
 import RiskScore from "src/components/RiskScore.vue";
 import KnownInteractions from "src/components/KnownInteractions.vue";
+import MedicationList from "src/components/MedicationList.vue";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
     MedicationPicker,
+    MedicationList,
     RiskScore,
     KnownInteractions,
   },

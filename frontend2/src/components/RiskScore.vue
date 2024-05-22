@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <h1 class="h1">Risk Score</h1>
+    Risk Score
     <div id="risk-score" class="container container-sm">{{ number }}</div>
   </div>
 </template>

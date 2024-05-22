@@ -1,11 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div class="container">
-      <div class="row">
-        <div class="col">
-          <MedicationPicker class="card" />
-        </div>
-      </div>
+      <MedicationPicker class="card" />
 
       <MedicationList></MedicationList>
 

@@ -1,76 +1,65 @@
 <template>
-  <div class="container text-center">
-    <div class="col">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-5">
-            <div class="text-h4">Add Medication</div>
+  <div class="column items-center">
+    <div class="text-h4">Add Medication</div>
 
-            <form @submit.prevent="searchForMedication()" class="input-group">
-              <q-input
-                v-model="searchString"
-                :loading="loadingSpinnerShown"
-                @keydown.enter.prevent="searchForMedication()"
-                rounded
-                outlined
-                placeholder="Search medication"
-              >
-                <template v-slot:append>
-                  <q-icon name="search" @click="searchForMedication()" />
-                </template>
-              </q-input>
-            </form>
+    <form @submit.prevent="searchForMedication()" class="input-group">
+      <q-input
+        v-model="searchString"
+        :loading="loadingSpinnerShown"
+        @keydown.enter.prevent="searchForMedication()"
+        rounded
+        outlined
+        placeholder="Search medication"
+      >
+        <template v-slot:append>
+          <q-icon name="search" @click="searchForMedication()" />
+        </template>
+      </q-input>
+    </form>
 
-            <div class="container card">
-              <div
-                class="container text-center"
-                v-show="loadingSpinnerShown"
-              ></div>
+    <div class="container card">
+      <div class="container text-center" v-show="loadingSpinnerShown"></div>
 
-              <div id="search-results">
-                <div v-if="loadingSpinnerShown">
-                  <div class="q-pa-md">
-                    <div class="q-gutter-y-md">
-                      <q-skeleton animation="wave" type="rect" />
-                      <q-skeleton animation="wave" type="rect" />
-                      <q-skeleton animation="wave" type="rect" />
-                    </div>
-                  </div>
-                </div>
-
-                <q-list>
-                  <div v-for="result of searchResults" v-bind:key="result">
-                    <q-item>
-                      <q-item-section>
-                        <q-item-label>{{ result }}</q-item-label>
-                      </q-item-section>
-                      <q-item-section side top>
-                        <q-btn
-                          outline
-                          rounded
-                          color="primary"
-                          label="Add"
-                          @click="this.addMedicationToSelection(result)"
-                        />
-                      </q-item-section>
-                    </q-item>
-                  </div>
-                  <q-item
-                    v-if="
-                      searchResults.length === 0 &&
-                      !loadingSpinnerShown &&
-                      !isInitialSearch
-                    "
-                  >
-                    <q-item-section>
-                      <q-item-label>No medications found</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </div>
+      <div id="search-results">
+        <div v-if="loadingSpinnerShown">
+          <div class="q-pa-md">
+            <div class="q-gutter-y-md">
+              <q-skeleton animation="wave" type="rect" />
+              <q-skeleton animation="wave" type="rect" />
+              <q-skeleton animation="wave" type="rect" />
             </div>
           </div>
         </div>
+
+        <q-list>
+          <div v-for="result of searchResults" v-bind:key="result">
+            <q-item>
+              <q-item-section>
+                <q-item-label>{{ result }}</q-item-label>
+              </q-item-section>
+              <q-item-section side top>
+                <q-btn
+                  outline
+                  rounded
+                  color="primary"
+                  label="Add"
+                  @click="this.addMedicationToSelection(result)"
+                />
+              </q-item-section>
+            </q-item>
+          </div>
+          <q-item
+            v-if="
+              searchResults.length === 0 &&
+              !loadingSpinnerShown &&
+              !isInitialSearch
+            "
+          >
+            <q-item-section>
+              <q-item-label>No medications found</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </div>
     </div>
   </div>

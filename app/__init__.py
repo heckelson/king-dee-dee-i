@@ -27,14 +27,14 @@ def mock_response(search_term):
     con = sqlite3.connect("test.db")
     con.row_factory = sqlite3.Row  # This allows us to return rows as dictionaries
 
-    query = "SELECT distinct drug_1_concept_name FROM drugs where drug_1_concept_name like ?;"
+    query = "SELECT name FROM drug_names where name like ?;"
     search_term = f"%{search_term}%"
     cur = con.execute(query, (search_term,))
     results = cur.fetchall()
     search_results = [dict(row) for row in results]  # Convert rows to dictionaries
     print(search_results)
     con.close()
-    drug_names = [drug["drug_1_concept_name"] for drug in search_results]
+    drug_names = [drug["name"] for drug in search_results]
     return {
         "searchTerm": search_term,
         "searchResults": drug_names,
@@ -99,6 +99,7 @@ def mock_interactions():
     WHERE
     drug_1_concept_name IN ({})
     AND drug_2_concept_name IN ({})
+    AND mean_reporting_frequency > 0.05
     GROUP BY
     drug_1_concept_name,
     drug_2_concept_name,

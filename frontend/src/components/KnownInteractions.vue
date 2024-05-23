@@ -1,34 +1,22 @@
 <template>
   <div class="column items-center">
     <div class="q-pa-md" style="max-width: 700px">
-      <q-expansion-item
-        v-model="isAccordionExpanded"
-        class="shadow-1 overflow-hidden"
-        style="border-radius: 24px"
-        :icon="icon"
-        :label="label"
-        :header-class="`bg-${color} text-white`"
-        :expand-icon-class="
-          loadingSpinnerShown ||
-          interactions.searchResults == null ||
-          interactions.searchResults?.length === 0
-            ? 'hidden'
-            : 'text-white'
-        "
-      >
+      <q-expansion-item v-model="isAccordionExpanded" class="shadow-1 overflow-hidden" style="border-radius: 24px"
+        :icon="icon" :label="label" :header-class="`bg-${color} text-white`" :expand-icon-class="isLoading ||
+        interactions.searchResults == null ||
+        interactions.searchResults?.length === 0
+        ? 'hidden'
+        : 'text-white'
+        ">
         <q-card>
           <q-card-section>
             <div class="row">
               <q-list>
-                <div
-                  v-for="interaction in this.interactions.searchResults"
-                  v-bind:key="interaction"
-                >
+                <div v-for="interaction in interactions.searchResults" v-bind:key="interaction">
                   <q-item>
                     <q-item-section>
                       <q-item-label class="text-h6">
-                        {{ interaction.condition_concept_name }}</q-item-label
-                      >
+                        {{ interaction.condition_concept_name }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </div>
@@ -41,100 +29,45 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch } from "vue";
 import { useMedStore } from "stores/store";
-import { mapStores, storeToRefs } from "pinia";
 
-import { SERVER_URL } from "src/constants";
+const medStore = useMedStore();
+const color = ref("green");
+const icon = ref("check");
+const label = ref("No known interactions");
+const isAccordionExpanded = ref(false);
 
-export default {
-  data() {
-    return {
-      interactions: {},
-      medStore: undefined, // defined in `mounted()`
-      loadingSpinnerShown: false,
-      color: "green",
-      icon: "check",
-      label: "No known interactions",
-      isAccordionExpanded: false,
-    };
-  },
+const isLoading = computed(() => medStore.isLoading);
+const interactions = computed(() => medStore.interactions);
 
-  mounted() {
-    this.medStore = storeToRefs(this.medStoreStore);
-  },
+watch(
+  isLoading,
+  () => {
+    if (isLoading.value === true) {
+      color.value = "blue";
+      icon.value = "hourglass_empty";
+      label.value = "Looking for interactions ...";
+      isAccordionExpanded.value = false;
+      return;
+    }
+  }
+);
 
-  methods: {
-    fetchInteractions() {
-      const encodedSelection = encodeURI(this.medStore.selectedMeds);
+watch(interactions, () => {
+  if (interactions.value.searchResults?.length > 0) {
+    color.value = "deep-orange";
+    icon.value = "warning";
+    label.value = `${interactions.value?.searchResults?.length ?? 0
+      } possible interactions are known`;
+  } else {
+    color.value = "green";
+    icon.value = "check";
+    label.value = "No known interactions";
+  }
+}, { deep: true });
 
-      this.loadingSpinnerShown = true;
-
-      if (this.medStore.selectedMeds?.length >= 2) {
-        fetch(
-          `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
-        )
-          .then((resp) => {
-            resp.json().then((body) => {
-              this.interactions = body;
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          })
-          .finally(() => {
-            this.loadingSpinnerShown = false;
-          });
-      }
-    },
-  },
-  computed: {
-    ...mapStores(useMedStore),
-  },
-
-  watch: {
-    medStore: {
-      handler(newState, _) {
-        if (newState === undefined) return;
-        if (newState.selectedMeds?.length > 1) {
-          this.fetchInteractions();
-        } else {
-          // we can't have interactions with only 1 med, thus we clear the variable.
-          this.interactions = [];
-        }
-      },
-      deep: true,
-    },
-    loadingSpinnerShown: {
-      handler(newState, _) {
-        if (this.loadingSpinnerShown) {
-          this.color = "blue";
-          this.icon = "hourglass_empty";
-          this.label = "Looking for interactions ...";
-          this.isAccordionExpanded = false;
-          return;
-        }
-      },
-    },
-    interactions: {
-      handler(newState, _) {
-        console.log("interactions changed", newState);
-        if (newState.searchResults?.length > 0) {
-          this.color = "deep-orange";
-          this.icon = "warning";
-          this.label = `${
-            this.interactions?.searchResults?.length ?? 0
-          } possible interactions are known`;
-        } else {
-          this.color = "green";
-          this.icon = "check";
-          this.label = "No known interactions";
-        }
-      },
-      deep: true,
-    },
-  },
-};
 </script>
 
 <style></style>

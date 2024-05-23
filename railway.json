@@ -7,8 +7,7 @@
                 "setup": {
                     "nixPkgs": [
                         "python2",
-                        "sqlite",
-                        "printf"
+                        "sqlite"
                     ],
                     "aptPkgs": [
                         "build-essential",
@@ -17,7 +16,8 @@
                     ]
                 }
             }
-        }
+        },
+        "buildCommand": "cd ./frontend && npm install && npm run build"
     },
     "deploy": {
         "startCommand": "cd ./frontend && npm run serve"

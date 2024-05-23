@@ -83,10 +83,26 @@ def mock_interactions():
     con = sqlite3.connect("test.db")
     con.row_factory = sqlite3.Row
     cursor = con.cursor()
-    base_query = """
-    SELECT distinct condition_concept_name
-    FROM drugs
-    WHERE drug_1_concept_name IN ({}) AND drug_2_concept_name IN ({})
+    # base_query = """
+    # SELECT distinct condition_concept_name
+    # FROM drugs
+    # WHERE drug_1_concept_name IN ({}) AND drug_2_concept_name IN ({})
+    # """
+
+    base_query = """\
+    SELECT
+    drug_1_concept_name,
+    drug_2_concept_name,
+    condition_concept_name
+    FROM
+    drugs
+    WHERE
+    drug_1_concept_name IN ({})
+    AND drug_2_concept_name IN ({})
+    GROUP BY
+    drug_1_concept_name,
+    drug_2_concept_name,
+    condition_concept_name;
     """
 
     placeholders = ",".join("?" for _ in selected_meds)
@@ -102,6 +118,8 @@ def mock_interactions():
     results = cursor.fetchall()
 
     search_results = [dict(row) for row in results]
+
+    print(search_results)
 
     # --------------dynamic query end---------
 

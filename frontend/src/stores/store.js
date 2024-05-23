@@ -38,23 +38,25 @@ export const useMedStore = defineStore("medStore", {
     fetchInteractions(selectedMeds) {
       const encodedSelection = encodeURI(selectedMeds);
 
-      if (selectedMeds?.length >= 2) {
-        this.isLoading = true;
+      if (selectedMeds?.length < 2) {
+        this.$state.interactions = {};
+      } else {
+        this.$state.isLoading = true;
         fetch(
           `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
         )
           .then((resp) => {
-            console.log(resp);
+            console.log("resp", resp);
             resp.json().then((body) => {
-              this.interactions = body;
-              console.log(this.interactions);
+              this.$state.interactions = body;
+              console.log("this.interactions", this.$state.interactions);
             });
           })
           .catch((err) => {
             console.error(err);
           })
           .finally(() => {
-            this.isLoading = false;
+            this.$state.isLoading = false;
           });
       }
     },

@@ -34,8 +34,8 @@ Your database will be available at `test.db`.
 ### Install Frontend Dependencies
 
 - cd to `frontend/`
-- `npm install`
-- `npm run build`
+- `yarn install`
+- `yarn build`
 
 ### Run Application
 
@@ -46,4 +46,4 @@ This starts up flask, which is configured to serve the vue files.
 ### Working on the frontend
 
 - Run the flask server (see "Run Application")
-- cd to `frontend/` and run `npm run serve`.
+- cd to `frontend/` and run `yarn serve`.

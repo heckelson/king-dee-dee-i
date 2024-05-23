@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { SERVER_URL } from "src/constants";
 
 export const useMedStore = defineStore("medStore", {
   state: () => ({
@@ -15,7 +16,9 @@ export const useMedStore = defineStore("medStore", {
         this.$state.selectedMeds.push(medication);
         this.$state.selectedMeds.sort();
       }
+      this.fetchInteractions(this.$state.selectedMeds);
     },
+
     removeMedication(medication) {
       const other_meds = this.$state.selectedMeds.filter(
         (elem) => elem !== medication,
@@ -23,26 +26,28 @@ export const useMedStore = defineStore("medStore", {
 
       this.$state.selectedMeds = other_meds;
       this.$state.selectedMeds.sort();
+
+      this.fetchInteractions(this.$state.selectedMeds);
     },
+
     clearAllSelectedMeds() {
       this.$state.selectedMeds = [];
+      this.fetchInteractions(this.$state.selectedMeds);
     },
-    setInteractions(interactions) {
-      console.log("setting interactions", interactions);
-      this.$state.interactions = interactions;
-    },
+
     fetchInteractions(selectedMeds) {
       const encodedSelection = encodeURI(selectedMeds);
 
-      this.isLoading = true;
-
       if (selectedMeds?.length >= 2) {
+        this.isLoading = true;
         fetch(
           `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
         )
           .then((resp) => {
+            console.log(resp);
             resp.json().then((body) => {
               this.interactions = body;
+              console.log(this.interactions);
             });
           })
           .catch((err) => {

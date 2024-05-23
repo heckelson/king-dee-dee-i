@@ -16,26 +16,10 @@
             <div class="row">
               <q-list>
                 <div
-                  v-for="(interaction, index) in this.interactions
-                    .searchResults"
+                  v-for="interaction in this.interactions.searchResults"
                   v-bind:key="interaction"
                 >
-                  <q-item v-if="index % 2 == 0" style="width: 190px">
-                    <q-item-section>
-                      <q-item-label class="text-h6">
-                        {{ interaction.condition_concept_name }}</q-item-label
-                      >
-                    </q-item-section>
-                  </q-item>
-                </div>
-              </q-list>
-              <q-list>
-                <div
-                  v-for="(interaction, index) in this.interactions
-                    .searchResults"
-                  v-bind:key="interaction"
-                >
-                  <q-item v-if="index % 2 == 1" style="width: 190px">
+                  <q-item>
                     <q-item-section>
                       <q-item-label class="text-h6">
                         {{ interaction.condition_concept_name }}</q-item-label

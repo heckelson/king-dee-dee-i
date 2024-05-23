@@ -14,7 +14,7 @@
       <div v-if="!isLoading">{{ riskScore_Likert }}</div>
       <!-- <q-skeleton v-if="isLoading" type="rect" width="1em" /> -->
     </q-circular-progress>
-    <div class="text-uppercase text-h6">{{ `${isLoading ? "Calculating ..." : "Risk score "}` }}</div>
+    <div class="text-uppercase text-h6">Risk Score</div>
   </div>
 </template>
 
@@ -41,13 +41,15 @@ const color = computed(() => {
 });
 
 const riskValue_percent = computed(() => {
-  return Math.min(100, ((medStore.interactions.searchResults?.length ?? 0) * 100) / 10);
-})
+  return Math.min(
+    100,
+    ((medStore.interactions.searchResults?.length ?? 0) * 100) / 10
+  );
+});
 
 const riskScore_Likert = computed(() => {
   return Math.max(1, Math.round(riskValue_percent.value / 10));
 });
-
 </script>
 
 <style>

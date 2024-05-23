@@ -82,6 +82,6 @@ export default {
 
 <style scoped>
 .list {
-  min-width: 500px;
+  min-width: 300px;
 }
 </style>

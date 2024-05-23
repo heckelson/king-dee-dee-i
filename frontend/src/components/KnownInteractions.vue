@@ -9,7 +9,7 @@
         :label="label"
         :header-class="`bg-${color} text-white`"
         :expand-icon-class="
-          loadingSpinnerShown ||
+          isLoading ||
           interactions.searchResults == null ||
           interactions.searchResults?.length === 0
             ? 'hidden'
@@ -52,7 +52,6 @@ export default {
     return {
       interactions: {},
       medStore: undefined, // defined in `mounted()`
-      loadingSpinnerShown: false,
       color: "green",
       icon: "check",
       label: "No known interactions",
@@ -65,31 +64,13 @@ export default {
   },
 
   methods: {
-    fetchInteractions() {
-      const encodedSelection = encodeURI(this.medStore.selectedMeds);
-
-      this.loadingSpinnerShown = true;
-
-      if (this.medStore.selectedMeds?.length >= 2) {
-        fetch(
-          `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
-        )
-          .then((resp) => {
-            resp.json().then((body) => {
-              this.interactions = body;
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          })
-          .finally(() => {
-            this.loadingSpinnerShown = false;
-          });
-      }
+    async fetchInteractions() {
+      this.medStore.fetchInteractions(this.medStore.selectedMeds);
     },
   },
   computed: {
     ...mapStores(useMedStore),
+    isLoading: () => this.medStore.isLoading,
   },
 
   watch: {
@@ -105,9 +86,9 @@ export default {
       },
       deep: true,
     },
-    loadingSpinnerShown: {
+    medStore: {
       handler(newState, _) {
-        if (this.loadingSpinnerShown) {
+        if (this.isLoading) {
           this.color = "blue";
           this.icon = "hourglass_empty";
           this.label = "Looking for interactions ...";

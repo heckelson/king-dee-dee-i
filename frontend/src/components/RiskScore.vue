@@ -17,8 +17,11 @@
 </template>
 
 <script setup>
-const number = 12;
-const riskValue_percent = 88;
+import { useMedStore } from "src/stores/store";
+import { watch } from "vue";
+
+const riskValue_percent = 0;
+const medStore = useMedStore();
 
 const getColor = (riskValue_percent) => {
   if (riskValue_percent < 25) {
@@ -35,6 +38,15 @@ const getColor = (riskValue_percent) => {
 const getRiskScore = (riskValue_percent) => {
   return Math.max(1, Math.round(riskValue_percent / 10));
 };
+
+watch(
+  medStore.interactions,
+  () => {
+    console.log("Selected meds changed", interactions);
+    riskValue_percent = Math.min(100, (searchResults * 100) / 500);
+  },
+  { deep: true }
+);
 </script>
 
 <style>

@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 export const useMedStore = defineStore("medStore", {
   state: () => ({
     selectedMeds: [],
+    interactions: {},
+    isLoading: false,
   }),
   getters: {
     // meds: (state) => state.selectedMeds,
@@ -24,6 +26,32 @@ export const useMedStore = defineStore("medStore", {
     },
     clearAllSelectedMeds() {
       this.$state.selectedMeds = [];
+    },
+    setInteractions(interactions) {
+      console.log("setting interactions", interactions);
+      this.$state.interactions = interactions;
+    },
+    fetchInteractions(selectedMeds) {
+      const encodedSelection = encodeURI(selectedMeds);
+
+      this.isLoading = true;
+
+      if (selectedMeds?.length >= 2) {
+        fetch(
+          `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
+        )
+          .then((resp) => {
+            resp.json().then((body) => {
+              this.interactions = body;
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+      }
     },
   },
 });

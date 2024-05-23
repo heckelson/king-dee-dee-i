@@ -1,16 +1,37 @@
 <template>
-  <div class="text-center">
-    <h1>Known Interactions</h1>
-    <div class="container">
-      <p>Table</p>
-
-      <div class="container text-center" v-show="loadingSpinnerShown">
-        <div class="spinner-grow text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-
-      <pre class="text-start">{{ this.interactions }}</pre>
+  <div class="column items-center">
+    <div class="q-pa-md" style="max-width: 350px">
+      <q-expansion-item
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 24px"
+        icon="warning"
+        label="Interactions are known"
+        @show="startCounting"
+        @hide="stopCounting"
+        header-class="bg-deep-orange text-white"
+        expand-icon-class="text-white"
+      >
+        <q-card>
+          <q-card-section>
+            <div class="list">
+              <q-list>
+                <div
+                  v-for="interaction of this.interactions.searchResults"
+                  v-bind:key="interaction"
+                >
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label class="text-h6">{{
+                        interaction.condition_concept_name
+                      }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </div>
+              </q-list>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
     </div>
   </div>
 </template>
@@ -24,7 +45,7 @@ import { SERVER_URL } from "src/constants";
 export default {
   data() {
     return {
-      interactions: [],
+      interactions: {},
       medStore: undefined, // defined in `mounted()`
       loadingSpinnerShown: false,
     };

@@ -5,25 +5,31 @@
       :value="getRiskScore(riskValue_percent) * 10"
       size="90px"
       :thickness="0.2"
-      :color="getColor(riskValue_percent)"
+      :color="color"
       track-color="transparent"
       class="q-ma-md"
       show-value
+      :indeterminate="isLoading"
     >
-      {{ getRiskScore(riskValue_percent) }}
+      <div v-if="!isLoading">{{ getRiskScore(riskValue_percent) }}</div>
+      <!-- <q-skeleton v-if="isLoading" type="rect" width="1em" /> -->
     </q-circular-progress>
-    <div class="text-uppercase text-h6">Risk Score</div>
+    <div class="text-uppercase text-h6">{{ `${isLoading ? "Calculating ..." : "Risk score "}` }}</div>
   </div>
 </template>
 
 <script setup>
 import { useMedStore } from "src/stores/store";
-import { watch } from "vue";
+import { computed, watch } from "vue";
 
 const riskValue_percent = 0;
 const medStore = useMedStore();
+const isLoading = computed(() => medStore.isLoading);
 
-const getColor = (riskValue_percent) => {
+const color = computed(() => {
+  if (isLoading.value === true) {
+    return "grey";
+  }
   if (riskValue_percent < 25) {
     return "green";
   } else if (riskValue_percent < 50) {
@@ -33,7 +39,7 @@ const getColor = (riskValue_percent) => {
   } else {
     return "red";
   }
-};
+});
 
 const getRiskScore = (riskValue_percent) => {
   return Math.max(1, Math.round(riskValue_percent / 10));

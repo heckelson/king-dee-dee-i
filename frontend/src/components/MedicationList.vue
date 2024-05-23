@@ -27,7 +27,9 @@
         </div>
         <q-item-label v-if="this.medStoreStore.selectedMeds.length === 0">
           <q-item-section>
-            <q-item-label>No medications found</q-item-label>
+            <q-item-label class="text-center"
+              >No medications found</q-item-label
+            >
           </q-item-section>
         </q-item-label>
       </q-list>

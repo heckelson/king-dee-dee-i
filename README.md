@@ -2,6 +2,8 @@
 
 ![](./frontend/src/assets/dedede-big.png)
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/PM5XoJ?referralCode=9XJNhY)
+
 ## Setup
 
 ### Set up DB

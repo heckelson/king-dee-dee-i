@@ -46,7 +46,6 @@ export const useMedStore = defineStore("medStore", {
           `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
         )
           .then((resp) => {
-            console.log("resp", resp);
             resp.json().then((body) => {
               this.$state.interactions = body;
               console.log("this.interactions", this.$state.interactions);

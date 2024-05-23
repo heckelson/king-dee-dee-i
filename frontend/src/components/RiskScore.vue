@@ -41,7 +41,7 @@ const color = computed(() => {
 });
 
 const riskValue_percent = computed(() => {
-  return Math.min(100, ((medStore.interactions.searchResults?.length ?? 0) * 100) / 100);
+  return Math.min(100, ((medStore.interactions.searchResults?.length ?? 0) * 100) / 10);
 })
 
 const riskScore_Likert = computed(() => {

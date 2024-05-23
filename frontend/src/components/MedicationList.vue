@@ -12,7 +12,9 @@
         >
           <q-item>
             <q-item-section>
-              <q-item-label class="text-h6">{{ medication }}</q-item-label>
+              <q-item-label class="text-h6 text-capitalize">{{
+                medication
+              }}</q-item-label>
             </q-item-section>
             <q-item-section side top>
               <q-btn

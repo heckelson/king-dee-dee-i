@@ -2,6 +2,7 @@
   <div class="column items-center">
     <div class="q-pa-md" style="max-width: 700px">
       <q-expansion-item
+        v-model="isAccordionExpanded"
         class="shadow-1 overflow-hidden"
         style="border-radius: 24px"
         :icon="icon"
@@ -55,6 +56,7 @@ export default {
       color: "green",
       icon: "check",
       label: "No known interactions",
+      isAccordionExpanded: false,
     };
   },
 
@@ -109,6 +111,7 @@ export default {
           this.color = "blue";
           this.icon = "hourglass_empty";
           this.label = "Looking for interactions ...";
+          this.isAccordionExpanded = false;
           return;
         }
       },

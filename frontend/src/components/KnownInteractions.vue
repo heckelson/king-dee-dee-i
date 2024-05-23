@@ -34,40 +34,34 @@ import { ref, computed, watch } from "vue";
 import { useMedStore } from "stores/store";
 
 const medStore = useMedStore();
-const interactions = medStore.interactions;
 const color = ref("green");
 const icon = ref("check");
 const label = ref("No known interactions");
 const isAccordionExpanded = ref(false);
 
-
-const fetchInteractions = () => {
-  this.medStore.fetchInteractions(this.medStore.selectedMeds);
-};
-
 const isLoading = computed(() => medStore.isLoading);
-
+const interactions = computed(() => medStore.interactions);
 
 watch(
-  medStore,
+  isLoading,
   () => {
-    if (isLoading.value) {
+    console.log("isLoading changed to:", isLoading.value);
+    if (isLoading.value === true) {
       color.value = "blue";
       icon.value = "hourglass_empty";
       label.value = "Looking for interactions ...";
       isAccordionExpanded.value = false;
       return;
     }
-  },
-  { deep: true }
+  }
 );
 
 watch(interactions, () => {
-  console.log("interactions changed", interactions);
-  if (interactions.searchResults?.length > 0) {
+  console.log("interactions changed", interactions.value);
+  if (interactions.value.searchResults?.length > 0) {
     color.value = "deep-orange";
     icon.value = "warning";
-    label.value = `${interactions?.searchResults?.length ?? 0
+    label.value = `${interactions.value?.searchResults?.length ?? 0
       } possible interactions are known`;
   } else {
     color.value = "green";

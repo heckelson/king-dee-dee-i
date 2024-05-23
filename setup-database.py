@@ -30,6 +30,13 @@ if path_exists(DECOMPRESSED_FILENAME):
         f" | sqlite3 {DB_FILENAME}",
         shell=True,
     )
+    sh(
+        f'printf "CREATE TABLE drug_names (name TEXT NOT NULL);'
+        f"INSERT INTO drug_names "
+        f"SELECT DISTINCT drug_1_concept_name AS name FROM {TABLE_NAME};"
+        f'" | sqlite3 {DB_FILENAME}',
+        shell=True,
+    )
 
     # cleanup
     try:

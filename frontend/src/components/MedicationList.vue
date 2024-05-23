@@ -1,6 +1,6 @@
 <template>
-  <div class="column items-center">
-    <div class="column q-gutter-md">
+  <div class="column items-center q-gutter-y-md">
+    <div class="column">
       <div class="text-h4">Your Medications</div>
     </div>
 
@@ -21,6 +21,7 @@
                 color="primary"
                 label="Remove"
                 @click="this.removeMedicationFromSelection(medication)"
+                size="sm"
               />
             </q-item-section>
           </q-item>

@@ -2,8 +2,10 @@
   <q-page class="page flex flex-center">
     <div class="column q-gutter-xl">
       <MedicationPicker />
-      <MedicationList></MedicationList>
-      <RiskScore />
+      <div class="row justify-center">
+        <MedicationList />
+        <RiskScore class="riskScore" />
+      </div>
       <KnownInteractions />
     </div>
   </q-page>
@@ -33,5 +35,9 @@ export default defineComponent({
 <style scoped>
 .page {
   padding: 22px;
+}
+
+.riskScore {
+  padding-left: 48px;
 }
 </style>

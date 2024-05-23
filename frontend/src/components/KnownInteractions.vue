@@ -45,7 +45,6 @@ const interactions = computed(() => medStore.interactions);
 watch(
   isLoading,
   () => {
-    console.log("isLoading changed to:", isLoading.value);
     if (isLoading.value === true) {
       color.value = "blue";
       icon.value = "hourglass_empty";
@@ -57,7 +56,6 @@ watch(
 );
 
 watch(interactions, () => {
-  console.log("interactions changed", interactions.value);
   if (interactions.value.searchResults?.length > 0) {
     color.value = "deep-orange";
     icon.value = "warning";

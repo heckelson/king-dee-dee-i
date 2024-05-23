@@ -45,7 +45,6 @@ const riskValue_percent = computed(() => {
 })
 
 const riskScore_Likert = computed(() => {
-  console.log("riskValue_percent.value", riskValue_percent.value);
   return Math.max(1, Math.round(riskValue_percent.value / 10));
 });
 

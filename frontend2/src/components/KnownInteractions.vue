@@ -1,6 +1,6 @@
 <template>
   <div class="column items-center">
-    <div class="q-pa-md" style="max-width: 350px">
+    <div class="q-pa-md" style="max-width: 700px">
       <q-expansion-item
         class="shadow-1 overflow-hidden"
         style="border-radius: 24px"
@@ -13,17 +13,33 @@
       >
         <q-card>
           <q-card-section>
-            <div class="list">
+            <div class="row">
               <q-list>
                 <div
-                  v-for="interaction of this.interactions.searchResults"
+                  v-for="(interaction, index) in this.interactions
+                    .searchResults"
                   v-bind:key="interaction"
                 >
-                  <q-item>
+                  <q-item v-if="index % 2 == 0" style="width: 190px">
                     <q-item-section>
-                      <q-item-label class="text-h6">{{
-                        interaction.condition_concept_name
-                      }}</q-item-label>
+                      <q-item-label class="text-h6">
+                        {{ interaction.condition_concept_name }}</q-item-label
+                      >
+                    </q-item-section>
+                  </q-item>
+                </div>
+              </q-list>
+              <q-list>
+                <div
+                  v-for="(interaction, index) in this.interactions
+                    .searchResults"
+                  v-bind:key="interaction"
+                >
+                  <q-item v-if="index % 2 == 1" style="width: 190px">
+                    <q-item-section>
+                      <q-item-label class="text-h6">
+                        {{ interaction.condition_concept_name }}</q-item-label
+                      >
                     </q-item-section>
                   </q-item>
                 </div>

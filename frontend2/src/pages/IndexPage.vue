@@ -1,6 +1,6 @@
 <template>
   <q-page class="page flex flex-center">
-    <div class="column q-gutter-md">
+    <div class="column q-gutter-xl">
       <MedicationPicker />
       <MedicationList></MedicationList>
       <RiskScore />

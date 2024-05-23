@@ -4,12 +4,16 @@
       <q-expansion-item
         class="shadow-1 overflow-hidden"
         style="border-radius: 24px"
-        icon="warning"
-        label="Interactions are known"
-        @show="startCounting"
-        @hide="stopCounting"
-        header-class="bg-deep-orange text-white"
-        expand-icon-class="text-white"
+        :icon="icon"
+        :label="label"
+        :header-class="`bg-${color} text-white`"
+        :expand-icon-class="
+          loadingSpinnerShown ||
+          interactions.searchResults == null ||
+          interactions.searchResults?.length === 0
+            ? 'hidden'
+            : 'text-white'
+        "
       >
         <q-card>
           <q-card-section>
@@ -48,6 +52,9 @@ export default {
       interactions: {},
       medStore: undefined, // defined in `mounted()`
       loadingSpinnerShown: false,
+      color: "green",
+      icon: "check",
+      label: "No known interactions",
     };
   },
 
@@ -61,7 +68,7 @@ export default {
 
       this.loadingSpinnerShown = true;
 
-      if (this.medStore.selectedMeds.length >= 2) {
+      if (this.medStore.selectedMeds?.length >= 2) {
         fetch(
           `${SERVER_URL}/mock-interactions?selectedMeds=${encodedSelection}`
         )
@@ -87,11 +94,38 @@ export default {
     medStore: {
       handler(newState, _) {
         if (newState === undefined) return;
-        if (newState.selectedMeds.length > 1) {
+        if (newState.selectedMeds?.length > 1) {
           this.fetchInteractions();
         } else {
           // we can't have interactions with only 1 med, thus we clear the variable.
           this.interactions = [];
+        }
+      },
+      deep: true,
+    },
+    loadingSpinnerShown: {
+      handler(newState, _) {
+        if (this.loadingSpinnerShown) {
+          this.color = "blue";
+          this.icon = "hourglass_empty";
+          this.label = "Looking for interactions ...";
+          return;
+        }
+      },
+    },
+    interactions: {
+      handler(newState, _) {
+        console.log("interactions changed", newState);
+        if (newState.searchResults?.length > 0) {
+          this.color = "deep-orange";
+          this.icon = "warning";
+          this.label = `${
+            this.interactions?.searchResults?.length ?? 0
+          } possible interactions are known`;
+        } else {
+          this.color = "green";
+          this.icon = "check";
+          this.label = "No known interactions";
         }
       },
       deep: true,

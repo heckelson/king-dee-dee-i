@@ -20,7 +20,7 @@
                 rounded
                 color="primary"
                 label="Remove"
-                @click="this.removeMedicationFromSelection(result)"
+                @click="this.removeMedicationFromSelection(medication)"
               />
             </q-item-section>
           </q-item>

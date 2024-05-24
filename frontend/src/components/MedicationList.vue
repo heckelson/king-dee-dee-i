@@ -1,5 +1,5 @@
 <template>
-  <div class="column items-center q-gutter-y-md">
+  <div class="column items-center q-gutter-y-md listWrapper">
     <div class="column">
       <div class="text-h4">Your Medications</div>
     </div>
@@ -86,5 +86,12 @@ export default {
 <style scoped>
 .list {
   min-width: 300px;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

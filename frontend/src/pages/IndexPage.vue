@@ -1,6 +1,14 @@
 <template>
-  <q-page class="page flex flex-center">
-    <div class="column q-gutter-xl">
+  <q-page class="page">
+    <div class="column q-gutter-xl items-center">
+      <div class="appTitle">
+        <q-img
+          src="src/assets/pill_dedede.png"
+          style="height: 100px"
+          fit="contain"
+        />
+        <div class="text-h4 appTitleHeader">Dedede's Medication Picker</div>
+      </div>
       <MedicationPicker />
       <div class="row justify-center">
         <MedicationList />
@@ -35,6 +43,18 @@ export default defineComponent({
 <style scoped>
 .page {
   padding: 22px;
+}
+
+.appTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 48px;
+}
+
+.appTitleHeader {
+  font-weight: 700;
+  min-width: 300px;
 }
 
 .riskScore {

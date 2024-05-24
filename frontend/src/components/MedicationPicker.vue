@@ -66,6 +66,8 @@ import { useMedStore } from "stores/store";
 import { mapStores, storeToRefs } from "pinia";
 
 import { SERVER_URL } from "src/constants";
+import { useToast } from "vue-toastification";
+import { notify } from "src/components/notify";
 
 export default {
   data() {
@@ -103,6 +105,8 @@ export default {
           .catch((err) => {
             // TODO: Handle this better.
             console.error(err);
+            const toast = useToast();
+            toast("le toast");
           })
           .finally(() => {
             this.loadingSpinnerShown = false;

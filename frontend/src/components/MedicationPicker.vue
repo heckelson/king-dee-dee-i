@@ -38,7 +38,7 @@
                 rounded
                 color="primary"
                 label="Add"
-                @click="this.addMedicationToSelection(result)"
+                @click="addMedicationToSelection(result)"
               />
             </q-item-section>
           </q-item>
@@ -61,70 +61,55 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useMedStore } from "stores/store";
-import { mapStores, storeToRefs } from "pinia";
 
 import { SERVER_URL } from "src/constants";
 import { useToast } from "vue-toastification";
 import { notify } from "src/components/notify";
+import { ref } from "vue";
 
-export default {
-  data() {
-    return {
-      isInitialSearch: true,
-      searchString: "",
-      searchResults: [],
-      medStore: undefined,
-      loadingSpinnerShown: false,
-    };
-  },
+const isInitialSearch = ref(true);
+const searchString = ref("");
+const searchResults = ref([]);
+const medStore = useMedStore();
+const loadingSpinnerShown = ref(false);
 
-  mounted() {
-    this.medStore = storeToRefs(this.medStoreStore);
-  },
+const searchForMedication = () => {
+  isInitialSearch.value = false;
+  if (searchString.value.length > 2) {
+    searchResults.value = [];
+    loadingSpinnerShown.value = true;
 
-  methods: {
-    searchForMedication() {
-      this.isInitialSearch = false;
-      if (this.searchString.length > 2) {
-        this.searchResults = [];
-        this.loadingSpinnerShown = true;
+    fetch(`${SERVER_URL}/mock-search/${searchString.value}`)
+      .then((resp) => {
+        resp.json().then((body) => {
+          searchResults.value = body["searchResults"];
 
-        fetch(`${SERVER_URL}/mock-search/${this.searchString}`)
-          .then((resp) => {
-            resp.json().then((body) => {
-              this.searchResults = body["searchResults"];
+          // filter out all elements that are already in our selection.
+          searchResults.value = searchResults.value.filter(
+            (elem) => medStoreStore.selectedMeds.indexOf(elem) === -1
+          );
+        });
+      })
+      .catch((err) => {
+        // TODO: Handle this better.
+        console.error(err);
+        const toast = useToast();
+        toast("le toast");
+      })
+      .finally(() => {
+        loadingSpinnerShown.value = false;
+      });
+  }
+};
 
-              // filter out all elements that are already in our selection.
-              this.searchResults = this.searchResults.filter(
-                (elem) => this.medStoreStore.selectedMeds.indexOf(elem) === -1
-              );
-            });
-          })
-          .catch((err) => {
-            // TODO: Handle this better.
-            console.error(err);
-            const toast = useToast();
-            toast("le toast");
-          })
-          .finally(() => {
-            this.loadingSpinnerShown = false;
-          });
-      }
-    },
+const addMedicationToSelection = (medication) => {
+  medStoreStore.addMedication(medication);
 
-    addMedicationToSelection(medication) {
-      this.medStoreStore.addMedication(medication);
-
-      // reset the form.
-      this.$data.searchResults = [];
-      this.searchString = "";
-    },
-  },
-  computed: {
-    ...mapStores(useMedStore),
-  },
+  // reset the form.
+  searchResults.value = [];
+  searchString.value = "";
 };
 </script>
 

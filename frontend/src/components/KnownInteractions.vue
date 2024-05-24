@@ -65,6 +65,7 @@ const label = ref("No known interactions");
 
 const isLoading = computed(() => medStore.isLoading);
 const interactions = computed(() => medStore.interactions);
+const lastStoreError = computed(() => medStore.lastError);
 
 const groupedInteractions = computed(() => {
   const interactionsList = interactions.value.searchResults;
@@ -117,6 +118,14 @@ watch(
   },
   { deep: true }
 );
+
+watch(lastStoreError, () => {
+  if (lastStoreError.value != null) {
+    color.value = "red";
+    icon.value = "error";
+    label.value = "Error looking for interactions";
+  }
+});
 </script>
 
 <style></style>

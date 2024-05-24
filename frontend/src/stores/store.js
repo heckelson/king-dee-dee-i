@@ -6,6 +6,7 @@ export const useMedStore = defineStore("medStore", {
     selectedMeds: [],
     interactions: {},
     isLoading: false,
+    lastError: null,
   }),
   getters: {
     // meds: (state) => state.selectedMeds,
@@ -36,6 +37,7 @@ export const useMedStore = defineStore("medStore", {
     },
 
     fetchInteractions(selectedMeds) {
+      this.$state.lastError = null;
       const encodedSelection = encodeURI(selectedMeds);
 
       if (selectedMeds?.length < 2) {
@@ -53,6 +55,7 @@ export const useMedStore = defineStore("medStore", {
           })
           .catch((err) => {
             console.error(err);
+            this.$state.lastError = err;
           })
           .finally(() => {
             this.$state.isLoading = false;

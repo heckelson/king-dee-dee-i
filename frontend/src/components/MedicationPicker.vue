@@ -87,7 +87,7 @@ const searchForMedication = () => {
 
           // filter out all elements that are already in our selection.
           searchResults.value = searchResults.value.filter(
-            (elem) => medStoreStore.selectedMeds.indexOf(elem) === -1
+            (elem) => medStore.selectedMeds.indexOf(elem) === -1
           );
         });
       })
@@ -97,6 +97,7 @@ const searchForMedication = () => {
         quasar.notify({
           type: "negative",
           message: "Error fetching medications",
+          caption: "Check if database is up and connected or contact admin",
         });
       })
       .finally(() => {
@@ -106,7 +107,7 @@ const searchForMedication = () => {
 };
 
 const addMedicationToSelection = (medication) => {
-  medStoreStore.addMedication(medication);
+  medStore.addMedication(medication);
 
   // reset the form.
   searchResults.value = [];

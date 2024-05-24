@@ -63,17 +63,16 @@
 
 <script setup>
 import { useMedStore } from "stores/store";
-
 import { SERVER_URL } from "src/constants";
-import { useToast } from "vue-toastification";
-import { notify } from "src/components/notify";
 import { ref } from "vue";
+import { useQuasar } from "quasar";
 
 const isInitialSearch = ref(true);
 const searchString = ref("");
 const searchResults = ref([]);
 const medStore = useMedStore();
 const loadingSpinnerShown = ref(false);
+const quasar = useQuasar();
 
 const searchForMedication = () => {
   isInitialSearch.value = false;
@@ -95,8 +94,10 @@ const searchForMedication = () => {
       .catch((err) => {
         // TODO: Handle this better.
         console.error(err);
-        const toast = useToast();
-        toast("le toast");
+        quasar.notify({
+          type: "negative",
+          message: "Error fetching medications",
+        });
       })
       .finally(() => {
         loadingSpinnerShown.value = false;

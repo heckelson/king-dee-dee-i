@@ -41,10 +41,14 @@ const color = computed(() => {
 });
 
 const riskValue_percent = computed(() => {
-  return Math.min(
-    100,
-    ((medStore.interactions.searchResults?.length ?? 0) * 100) / 10
-  );
+  if ((medStore.interactions.searchResults?.length ?? 0) <= 1) return 0;
+  const frequencies = medStore.interactions.searchResults.map((result) => {
+    const frequency = parseFloat(result.mean_reporting_frequency);
+    return frequency;
+  });
+  console.log("frequencies", frequencies);
+  const maxFrequency = Math.max(...frequencies);
+  return Math.min(100, (maxFrequency * 100) / 0.11);
 });
 
 const riskScore_Likert = computed(() => {

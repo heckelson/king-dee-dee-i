@@ -93,7 +93,8 @@ def mock_interactions():
     SELECT
     drug_1_concept_name,
     drug_2_concept_name,
-    condition_concept_name
+    condition_concept_name,
+    mean_reporting_frequency
     FROM
     drugs
     WHERE

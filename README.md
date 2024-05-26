@@ -41,9 +41,11 @@ Your database will be available at `test.db`.
 
 From the root of the repo, run `flask run --host=0.0.0.0 --port=8000 --debug`.
 
-This starts up flask, which is configured to serve the vue files.
+This starts up flask in the backend.
 
-### Working on the frontend
+### Run the frontend
 
 - Run the flask server (see "Run Application")
 - cd to `frontend/` and run `yarn serve`.
+
+If this does not work, try `npm install` and `npm run serve`.

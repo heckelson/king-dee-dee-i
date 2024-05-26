@@ -47,7 +47,12 @@ const riskValue_percent = computed(() => {
     return frequency;
   });
   console.log("frequencies", frequencies);
-  const maxFrequency = Math.max(...frequencies);
+  const maxFrequency =
+    frequencies.length === 0
+      ? 0
+      : Math.max(
+          ...frequencies.filter((f) => typeof f === "number" && isFinite(f))
+        );
   return Math.min(100, (maxFrequency * 100) / 0.11);
 });
 
